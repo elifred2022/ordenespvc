@@ -9,7 +9,9 @@ function TaskCard({ task }) {
 
   return (
     <div>
-      <h1>{task.name} </h1>
+      <h3>{task.nombre} </h3>
+      <h3>{task.desde} </h3>
+      <h3>{task.hasta} </h3>
       <div>
         <button onClick={handleDelete}>Delete</button>
         <button onClick={handleToggleDone}>Done</button>

@@ -26,7 +26,7 @@ export const TaskContextProvider = ({ children }) => {
       }
 
       const { data, error } = await supabase
-        .from("task")
+        .from("obras")
         .select("*")
         //.eq("done", false) // Puedes ajustar según necesites
         .order("id", { ascending: true });
@@ -41,7 +41,7 @@ export const TaskContextProvider = ({ children }) => {
     }
   };
 
-  const addTask = async (taskName) => {
+  const addTask = async (taskName, desde, hasta) => {
     try {
       const {
         data: { user },
@@ -54,9 +54,12 @@ export const TaskContextProvider = ({ children }) => {
         return false;
       }
 
-      const { error } = await supabase
-        .from("task")
-        .insert({ name: taskName, userId: user.id });
+      const { error } = await supabase.from("obras").insert({
+        nombre: taskName,
+        desde: desde,
+        hasta: hasta,
+        userId: user.id,
+      });
 
       if (error) {
         setMessage("Error al guardar tarea");

@@ -13,6 +13,12 @@ function TaskForm() {
     e.preventDefault();
     const success = await addTask(taskName);
     if (success) setTaskname("");
+
+    setTaskname("");
+    setDesde("");
+    setHasta("");
+
+    console.log({ taskName, desde, hasta });
   };
 
   return (
