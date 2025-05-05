@@ -17,7 +17,7 @@ export default function TaskList() {
     return (
       <ul className="list-disc pl-5">
         {tasks.map((task) => (
-          <TaskCard task={task} />
+          <TaskCard key={task.id} task={task} />
         ))}
       </ul>
     );

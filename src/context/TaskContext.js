@@ -41,7 +41,7 @@ export const TaskContextProvider = ({ children }) => {
     }
   };
 
-  const addTask = async (taskName, desde, hasta) => {
+  const addTask = async (nombre, desde, hasta) => {
     try {
       const {
         data: { user },
@@ -55,7 +55,7 @@ export const TaskContextProvider = ({ children }) => {
       }
 
       const { error } = await supabase.from("obras").insert({
-        nombre: taskName,
+        nombre: nombre,
         desde: desde,
         hasta: hasta,
         userId: user.id,
