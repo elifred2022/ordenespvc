@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
+  const [mensajeLink, setMensajeLink] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,6 +18,9 @@ function Login() {
     } catch (error) {
       console.error(error);
     }
+    setEmail("");
+
+    setMensajeLink("Le enviamos un link a su correo");
   };
 
   useEffect(() => {
@@ -40,14 +44,16 @@ function Login() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <h2> Ingrese su correo </h2>
         <input
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           name="email"
           placeholder="escribí tu email"
         />
-        <button>Send</button>
+        <button>Enviar</button>
       </form>
+      <h2>{mensajeLink} </h2>
     </div>
   );
 }

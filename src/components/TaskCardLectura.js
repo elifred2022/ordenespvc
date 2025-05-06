@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useTask } from "../context/TaskContext";
 
-function TaskCard({ task }) {
-  const { deleteTaskWithImage, getImageUrl } = useTask();
+function TaskCardLectura({ task }) {
+  const { getImageUrl } = useTask(); // Solo necesitamos obtener la URL
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState(null);
 
@@ -25,7 +25,6 @@ function TaskCard({ task }) {
             <th>Desde</th>
             <th>Hasta</th>
             <th>Plano</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -41,11 +40,6 @@ function TaskCard({ task }) {
               >
                 {task.imagen}
               </a>
-            </td>
-            <td>
-              <button onClick={() => deleteTaskWithImage(task)}>
-                Eliminar
-              </button>
             </td>
           </tr>
         </tbody>
@@ -78,4 +72,4 @@ function TaskCard({ task }) {
   );
 }
 
-export default TaskCard;
+export default TaskCardLectura;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { supabase } from "../supabase/client";
+import { useTask } from "../context/TaskContext";
 
 export default function TaskForm() {
   const [nombre, setNombre] = useState("");
@@ -7,52 +7,19 @@ export default function TaskForm() {
   const [hasta, setHasta] = useState("");
   const [archivo, setArchivo] = useState(null);
 
+  const { addTaskWithImage, message } = useTask();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!archivo) return alert("Selecciona un archivo");
+    const exito = await addTaskWithImage({ nombre, desde, hasta, archivo });
 
-    const nombreArchivo = `${Date.now()}_${archivo.name}`;
-
-    // 1. Subir imagen al bucket
-    const { error: uploadError } = await supabase.storage
-      .from("planos")
-      .upload(nombreArchivo, archivo);
-
-    if (uploadError) {
-      console.error("Error al subir imagen:", uploadError.message);
-      return;
+    if (exito) {
+      setNombre("");
+      setDesde("");
+      setHasta("");
+      setArchivo(null);
     }
-
-    // 2. Insertar datos en la tabla
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { error: insertError } = await supabase.from("obras").insert([
-      {
-        nombre,
-        desde,
-        hasta,
-        imagen: nombreArchivo,
-        userId: user.id, // ← aquí lo agregás
-      },
-    ]);
-
-    if (insertError) {
-      console.error("Error al guardar datos:", insertError.message);
-      return;
-    }
-
-    console.log(nombreArchivo);
-
-    // Limpiar formulario
-    setNombre("");
-    setDesde("");
-    setHasta("");
-    setArchivo(null);
-    alert("Plano subido con éxito");
   };
 
   return (
@@ -84,6 +51,7 @@ export default function TaskForm() {
         required
       />
       <button type="submit">Subir plano</button>
+      {message && <p>{message}</p>}
     </form>
   );
 }

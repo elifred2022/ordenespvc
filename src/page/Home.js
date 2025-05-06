@@ -3,10 +3,12 @@ import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
+import { useTask } from "../context/TaskContext"; // ⬅️ Importá el contexto
 
 function Home() {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
+  const { isAdmin } = useTask(); // ⬅️ Obtené el rol del usuario
 
   useEffect(() => {
     const checkUser = async () => {
@@ -16,9 +18,9 @@ function Home() {
       } = await supabase.auth.getUser();
 
       if (error || !user) {
-        navigate("/login"); // Redirige a login si no hay usuario
+        navigate("/login");
       } else {
-        setUserEmail(user.email); // Guarda el email del usuario logueado
+        setUserEmail(user.email);
       }
     };
 
@@ -36,8 +38,17 @@ function Home() {
       <p>
         Usuario logueado: <strong>{userEmail}</strong>
       </p>
-      <button onClick={handleLogout}>Logout</button>
-      <TaskForm />
+      <p>
+        Rol:{" "}
+        <strong style={{ color: isAdmin ? "green" : "orange" }}>
+          {isAdmin ? "Administrador" : "Lector"}
+        </strong>
+      </p>
+      <button onClick={handleLogout}>Cerrar sesión</button>
+
+      {/* Solo admins pueden ver el formulario */}
+      {isAdmin && <TaskForm />}
+
       <TaskList />
     </div>
   );
