@@ -5,6 +5,7 @@ import { supabase } from "./supabase/client";
 import Login from "./page/Login";
 import Home from "./page/Home";
 import { TaskContextProvider } from "./context/TaskContext";
+import AuthCallback from "./page/AuthCallback";
 
 function App() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function App() {
     <div className="App">
       <TaskContextProvider>
         <Routes>
+          <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
         </Routes>
