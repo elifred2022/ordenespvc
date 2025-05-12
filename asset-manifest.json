@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ordenespvc/static/css/main.dc4d6ff2.css",
-    "main.js": "/ordenespvc/static/js/main.694a5d28.js",
+    "main.js": "/ordenespvc/static/js/main.a61232d0.js",
     "static/js/952.fdfe0cf2.chunk.js": "/ordenespvc/static/js/952.fdfe0cf2.chunk.js",
     "index.html": "/ordenespvc/index.html",
     "main.dc4d6ff2.css.map": "/ordenespvc/static/css/main.dc4d6ff2.css.map",
-    "main.694a5d28.js.map": "/ordenespvc/static/js/main.694a5d28.js.map",
+    "main.a61232d0.js.map": "/ordenespvc/static/js/main.a61232d0.js.map",
     "952.fdfe0cf2.chunk.js.map": "/ordenespvc/static/js/952.fdfe0cf2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dc4d6ff2.css",
-    "static/js/main.694a5d28.js"
+    "static/js/main.a61232d0.js"
   ]
 }
