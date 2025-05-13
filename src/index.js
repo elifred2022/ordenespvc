@@ -10,3 +10,8 @@ root.render(
     <App />
   </BrowserRouter>
 );
+
+/*
+<BrowserRouter basename="/ordenespvc">
+    <App />
+  </BrowserRouter>*/
