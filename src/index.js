@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 
-const isProduction = process.env.NODE_ENV === "production";
-const basename = isProduction ? "/ordenespvc" : "/";
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter basename={basename}>
+root.render(
+  <BrowserRouter basename="/ordenespvc">
     <App />
   </BrowserRouter>
 );

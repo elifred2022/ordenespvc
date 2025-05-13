@@ -16,7 +16,7 @@ function App() {
     } = supabase.auth.onAuthStateChange((event, session) => {
       console.log(event, session);
       if (session) {
-        navigate("/"); // Navega a Home si hay una sesión válida
+        navigate("/home");
       } else {
         navigate("/login"); // Navega a Login si no hay sesión
       }
@@ -33,8 +33,8 @@ function App() {
       <TaskContextProvider>
         <Routes>
           <Route path="/auth/callback" element={<AuthCallback />} />
-          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </TaskContextProvider>
     </div>

@@ -1,22 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../supabase/client"; // Asegurate que esto apunta a tu archivo de configuración de supabase
+import { supabase } from "../supabase/client";
 
 function AuthCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleAuth = async () => {
-      // Maneja los parámetros de la URL (tokens)
-      const { data, error } = await supabase.auth.getSessionFromUrl({
-        storeSession: true,
-      });
+      const { error } = await supabase.auth.exchangeCodeForSession(); // ✅ función correcta
 
       if (error) {
         console.error("Error al procesar el login:", error.message);
-        navigate("/login"); // Redirige al login en caso de error
+        navigate("/login");
       } else {
-        // Redirige al Home o a la página deseada después de autenticarse
         navigate("/home");
       }
     };

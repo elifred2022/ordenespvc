@@ -12,6 +12,10 @@ function Login() {
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email: email,
+        options: {
+          emailRedirectTo:
+            "https://elifred2022.github.io/ordenespvc/auth/callback",
+        },
       });
       if (error) throw error;
       console.log("Check your email for the login link!");
@@ -19,7 +23,6 @@ function Login() {
       console.error(error);
     }
     setEmail("");
-
     setMensajeLink("Le enviamos un link a su correo");
   };
 
