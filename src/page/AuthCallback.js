@@ -7,12 +7,16 @@ function AuthCallback() {
 
   useEffect(() => {
     const handleAuth = async () => {
-      const { error } = await supabase.auth.exchangeCodeForSession(); // ✅ función correcta
+      // Usamos getSessionFromUrl para procesar el magic link
+      const { data, error } = await supabase.auth.getSessionFromUrl({
+        storeSession: true, // Esto guarda la sesión en el almacenamiento del cliente
+      });
 
       if (error) {
         console.error("Error al procesar el login:", error.message);
-        navigate("/login");
+        navigate("/login"); // Redirige al login en caso de error
       } else {
+        // Redirige a la página principal (o donde necesites después de la autenticación)
         navigate("/home");
       }
     };

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [mensajeLink, setMensajeLink] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // Agregado para manejar errores de forma visible
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage(""); // Reset error message antes de enviar
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email: email,
@@ -17,13 +19,17 @@ function Login() {
             "https://elifred2022.github.io/ordenespvc/auth/callback",
         },
       });
+
       if (error) throw error;
+
       console.log("Check your email for the login link!");
+      setMensajeLink("Le enviamos un link a su correo");
     } catch (error) {
+      setErrorMessage("Hubo un error al enviar el link. Intenta nuevamente.");
       console.error(error);
     }
-    setEmail("");
-    setMensajeLink("Le enviamos un link a su correo");
+
+    setEmail(""); // Limpiar el email después de enviar
   };
 
   useEffect(() => {
@@ -32,12 +38,14 @@ function Login() {
         data: { user },
         error,
       } = await supabase.auth.getUser();
+
       if (error) {
         console.log("Error fetching user:", error.message);
         return;
       }
+
       if (user) {
-        navigate("/");
+        navigate("/"); // Si hay un usuario, redirige a la página principal
       }
     };
 
@@ -53,10 +61,14 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           name="email"
           placeholder="escribí tu email"
+          value={email}
         />
         <button>Enviar</button>
       </form>
-      <h2>{mensajeLink} </h2>
+
+      {/* Mostrar mensaje de éxito o error */}
+      {mensajeLink && <h2>{mensajeLink}</h2>}
+      {errorMessage && <h3 style={{ color: "red" }}>{errorMessage}</h3>}
     </div>
   );
 }
