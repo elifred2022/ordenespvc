@@ -1,43 +1,49 @@
-import "./App.css";
 import { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { supabase } from "./supabase/client";
 import Login from "./page/Login";
 import Home from "./page/Home";
-import { TaskContextProvider } from "./context/TaskContext";
 import AuthCallback from "./page/AuthCallback";
 
 function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log(event, session);
+    const checkSession = async () => {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
       if (session) {
         navigate("/home");
       } else {
-        navigate("/login"); // Navega a Login si no hay sesión
+        navigate("/login");
+      }
+    };
+
+    checkSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        navigate("/home");
+      } else {
+        navigate("/login");
       }
     });
 
-    // Limpieza para evitar fugas de memoria
     return () => {
       subscription?.unsubscribe();
     };
-  }, [navigate]); // Asegúrate de que 'navigate' esté en la lista de dependencias
+  }, [navigate]);
 
   return (
-    <div className="App">
-      <TaskContextProvider>
-        <Routes>
-          <Route path="/auth/callback" element={<AuthCallback />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </TaskContextProvider>
-    </div>
+    <Routes>
+      <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   );
 }
 

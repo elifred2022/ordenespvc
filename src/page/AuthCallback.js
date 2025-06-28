@@ -1,4 +1,3 @@
-// src/page/AuthCallback.jsx
 import { useEffect } from "react";
 import { supabase } from "../supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +7,10 @@ function AuthCallback() {
 
   useEffect(() => {
     const handleCallback = async () => {
-      const { error } = await supabase.auth.getSessionFromUrl(); // IMPORTANTE
-
+      const { error } = await supabase.auth.getSessionFromUrl();
       if (error) {
-        console.error("Error procesando callback del magic link:", error);
+        console.error("Error procesando magic link:", error);
       } else {
-        console.log("Login exitoso con magic link");
         navigate("/home");
       }
     };
