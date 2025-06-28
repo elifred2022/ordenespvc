@@ -16,7 +16,7 @@ function Login() {
         email: email,
         options: {
           emailRedirectTo:
-            "https://ordenespvc-q18zf5qe1-eliezer-martinezs-projects.vercel.app/",
+            "https://ordenespvc-q18zf5qe1-eliezer-martinezs-projects.vercel.app/auth/callback",
         },
       });
 

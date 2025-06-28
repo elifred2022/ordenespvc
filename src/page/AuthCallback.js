@@ -1,35 +1,27 @@
+// src/page/AuthCallback.jsx
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { supabase } from "../supabase/client";
+import { useNavigate } from "react-router-dom";
 
 function AuthCallback() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleAuth = async () => {
-      // Usamos getSessionFromUrl para procesar el magic link
-      const { data, error } = await supabase.auth.getSessionFromUrl({
-        storeSession: true, // Esto guarda la sesión en el almacenamiento del cliente
-      });
+    const handleCallback = async () => {
+      const { error } = await supabase.auth.getSessionFromUrl(); // IMPORTANTE
 
       if (error) {
-        console.error("Error al procesar el login:", error.message);
-        navigate("/login"); // Redirige al login en caso de error
+        console.error("Error procesando callback del magic link:", error);
       } else {
-        // Redirige a la página principal (o donde necesites después de la autenticación)
+        console.log("Login exitoso con magic link");
         navigate("/home");
       }
     };
 
-    handleAuth();
+    handleCallback();
   }, [navigate]);
 
-  return (
-    <div style={{ padding: "2rem", textAlign: "center" }}>
-      <h2>Procesando login...</h2>
-      <p>Por favor espera un momento.</p>
-    </div>
-  );
+  return <p>Verificando sesión, por favor espera...</p>;
 }
 
 export default AuthCallback;
