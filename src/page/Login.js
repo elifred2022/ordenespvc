@@ -16,7 +16,7 @@ function Login() {
         email: email,
         options: {
           emailRedirectTo:
-            "https://elifred2022.github.io/ordenespvc/auth/callback",
+            "https://ordenespvc-q18zf5qe1-eliezer-martinezs-projects.vercel.app/",
         },
       });
 
